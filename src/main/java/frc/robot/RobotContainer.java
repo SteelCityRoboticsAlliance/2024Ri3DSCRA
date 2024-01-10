@@ -15,14 +15,14 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
-  // Shooter m_shooter;
+  Shooter m_shooter;
   ChassisSubsystem m_chassis;
   Intake m_intake;
 
   CommandXboxController m_controller;
 
   public RobotContainer() {
-    // m_shooter = new Shooter();
+    m_shooter = new Shooter();
     m_chassis = new ChassisSubsystem();
     m_intake = new Intake();
     m_controller = new CommandXboxController(0);
@@ -34,11 +34,12 @@ public class RobotContainer {
   private void configureBindings() {
     m_chassis.setDefaultCommand(new ChassisTeleopDriveCommand(m_chassis, m_controller));
 
-    // m_controller.a()
-      // .whileTrue(m_shooter.runShooterFactory(() -> SmartDashboard.getNumber("Percent Output", 0)))
-      // .whileFalse(m_shooter.runShooterFactory(() -> 0));
+    m_controller.a()
+      .whileTrue(m_shooter.runShooterFactory(() -> SmartDashboard.getNumber("Percent Output", 0)))
+      .whileFalse(m_shooter.runShooterFactory(() -> 0));
 
-    m_controller.b().whileTrue(m_intake.setIntakeSpeedFactory(() -> -0.75))
+    m_controller.b().whileTrue(m_intake.setIntakeSpeedFactory(() -> -0.75)
+        .alongWith(new InstantCommand(() -> m_shooter.runFunnel(0.5))))
       .whileFalse(m_intake.setIntakeSpeedFactory(() -> 0.0));
     m_controller.y().whileTrue(m_intake.setIntakeSpeedFactory(() -> 0.75))
       .whileFalse(m_intake.setIntakeSpeedFactory(() -> 0.0));

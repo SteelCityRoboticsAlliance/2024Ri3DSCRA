@@ -22,6 +22,9 @@ public class Constants {
 
     public static final int INTAKE_ID = 5;
 
+    public static final int PIVOT_LEFT = 6;
+    public static final int PIVOT_RIGHT = 7;
+
     // Shooter
 
 }
