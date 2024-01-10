@@ -17,8 +17,8 @@ public class Constants {
 
     public static final int FRONT_TOP_SHOOTER = 1;
     public static final int FRONT_BOTTOM_SHOOTER = 2;
-    public static final int BACK_TOP_SHOOTER = 3;
-    public static final int BACK_BOTTOM_SHOOTER = 4;
+    public static final int FUNNEL_LEFT = 3;
+    public static final int FUNNEL_RIGHT = 4;
 
     public static final int INTAKE_ID = 5;
 

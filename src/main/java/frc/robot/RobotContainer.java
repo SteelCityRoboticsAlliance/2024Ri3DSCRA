@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ChassisTeleopDriveCommand;
 import frc.robot.subsystems.ChassisSubsystem;
 import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
   // Shooter m_shooter;
@@ -40,8 +40,13 @@ public class RobotContainer {
 
     m_controller.b().whileTrue(m_intake.setIntakeSpeedFactory(() -> -0.75))
       .whileFalse(m_intake.setIntakeSpeedFactory(() -> 0.0));
+    m_controller.y().whileTrue(m_intake.setIntakeSpeedFactory(() -> 0.75))
+      .whileFalse(m_intake.setIntakeSpeedFactory(() -> 0.0));
 
     m_controller.x().onTrue(new InstantCommand(() -> m_chassis.resetGyro()));
+
+    // m_controller.leftBumper().onTrue(new InstantCommand(() -> m_shooter.runFunnel(0.5)))
+      // .onFalse(new InstantCommand(() -> m_shooter.runFunnel(0)));
   }
 
   public Command getAutonomousCommand() {

@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -17,41 +18,41 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   CANSparkFlex m_frontTop;
   CANSparkFlex m_frontBottom;
-  CANSparkFlex m_backTop;
-  CANSparkFlex m_backBottom;
+  CANSparkMax m_funnelLeft;
+  CANSparkMax m_funnelRight;
 
   /** Creates a new Shooter. */
   public Shooter() {
     m_frontTop = new CANSparkFlex(Constants.FRONT_TOP_SHOOTER, MotorType.kBrushless);
     m_frontBottom = new CANSparkFlex(Constants.FRONT_BOTTOM_SHOOTER, MotorType.kBrushless);
-    m_backTop = new CANSparkFlex(Constants.BACK_TOP_SHOOTER, MotorType.kBrushless);
-    m_backBottom = new CANSparkFlex(Constants.BACK_BOTTOM_SHOOTER, MotorType.kBrushless);
+    m_funnelLeft = new CANSparkMax(Constants.FUNNEL_LEFT, MotorType.kBrushed);
+    m_funnelRight = new CANSparkMax(Constants.FUNNEL_RIGHT, MotorType.kBrushed);
 
     m_frontTop.setInverted(true);
-    m_backTop.setInverted(true);
     m_frontBottom.setInverted(false);
-    m_backBottom.setInverted(false);
+    m_funnelRight.setInverted(true);
+    m_funnelLeft.setInverted(false);
 
     m_frontTop.setIdleMode(IdleMode.kCoast);
-    m_backTop.setIdleMode(IdleMode.kCoast);
+    m_funnelLeft.setIdleMode(IdleMode.kCoast);
     m_frontBottom.setIdleMode(IdleMode.kCoast);
-    m_backBottom.setIdleMode(IdleMode.kCoast);
+    m_funnelRight.setIdleMode(IdleMode.kCoast);
   }
 
-  public void runFront(double power) {
+  public void runShooter(double power) {
     m_frontTop.set(power);
     m_frontBottom.set(power);
   }
 
-  public void runBack(double power) {
-    m_backTop.set(power);
-    m_backBottom.set(power);
+  public void runFunnel(double power) {
+    m_funnelLeft.set(power);
+    m_funnelRight.set(power);
   }
 
   public Command runShooterFactory(DoubleSupplier power) {
     return run(() -> {
-      runFront(power.getAsDouble());
-      runBack(power.getAsDouble());
+      runShooter(power.getAsDouble());
+      runFunnel(power.getAsDouble() == 0.0 ? 0.0 : 0.5);  
     });
   }
 
