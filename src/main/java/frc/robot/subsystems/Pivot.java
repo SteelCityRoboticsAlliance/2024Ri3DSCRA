@@ -24,6 +24,16 @@ public class Pivot extends SubsystemBase {
     m_pivotRight.setIdleMode(IdleMode.kCoast);
   }
 
+  public void toggleBrakeMode() {
+    if (m_pivotLeft.getIdleMode() == IdleMode.kCoast && m_pivotRight.getIdleMode() == IdleMode.kCoast) {
+      m_pivotLeft.setIdleMode(IdleMode.kBrake);
+      m_pivotRight.setIdleMode(IdleMode.kBrake);
+    } else {
+      m_pivotLeft.setIdleMode(IdleMode.kCoast);
+      m_pivotRight.setIdleMode(IdleMode.kCoast);
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

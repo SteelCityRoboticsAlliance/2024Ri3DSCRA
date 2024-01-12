@@ -30,8 +30,8 @@ public class Shooter extends SubsystemBase {
 
     m_frontTop.setInverted(true);
     m_frontBottom.setInverted(false);
-    m_funnelRight.setInverted(true);
-    m_funnelLeft.setInverted(false);
+    m_funnelRight.setInverted(false);
+    m_funnelLeft.setInverted(true);
 
     m_frontTop.setIdleMode(IdleMode.kCoast);
     m_funnelLeft.setIdleMode(IdleMode.kCoast);
@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase {
   public Command runShooterFactory(DoubleSupplier power) {
     return run(() -> {
       runShooter(power.getAsDouble());
-      runFunnel(power.getAsDouble() == 0.0 ? 0.0 : 0.5);  
+      // if ((m_frontTop.get() + m_frontBottom.get()) / 2 != power.getAsDouble() * 0.9) runFunnel(power.getAsDouble() == 0.0 ? 0.0 : 0.25);  
     });
   }
 
